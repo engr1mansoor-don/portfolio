@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mansoor Ali — Backend & AI Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #050A1A;
+    --bg2: #0D1B3E;
+    --glass: rgba(255,255,255,0.06);
+    --glass-border: rgba(255,255,255,0.10);
+    --glass-hover: rgba(255,255,255,0.10);
+    --accent: #4F8EF7;
+    --accent2: #A78BFA;
+    --text: #E8EDF8;
+    --muted: #8896B3;
+    --white: #ffffff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ── BACKGROUND ORBS ── */
+  .bg-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.18;
+    animation: drift 18s ease-in-out infinite alternate;
+  }
+  .orb1 { width: 600px; height: 600px; background: #4F8EF7; top: -150px; left: -100px; animation-duration: 20s; }
+  .orb2 { width: 500px; height: 500px; background: #A78BFA; bottom: 10%; right: -100px; animation-duration: 25s; animation-delay: -8s; }
+  .orb3 { width: 350px; height: 350px; background: #22D3EE; top: 40%; left: 40%; animation-duration: 15s; animation-delay: -4s; }
+
+  @keyframes drift {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(40px, 30px) scale(1.08); }
+  }
+
+  /* ── LAYOUT ── */
+  .wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    background: rgba(5, 10, 26, 0.7);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 1rem 2rem;
+  }
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--white);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+
+  /* ── GLASS CARD ── */
+  .glass {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+  }
+  .glass:hover {
+    background: var(--glass-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: 5rem;
+  }
+  .hero-content { max-width: 720px; }
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(79,142,247,0.12);
+    border: 1px solid rgba(79,142,247,0.25);
+    border-radius: 100px;
+    padding: 0.35rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.02em;
+  }
+  .hero-tag::before { content: ''; width: 7px; height: 7px; background: var(--accent); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+  h1 {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(2.6rem, 6vw, 4.2rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+  .hero-subtitle {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    font-weight: 300;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.01em;
+  }
+  .hero-subtitle strong {
+    color: var(--accent2);
+    font-weight: 600;
+  }
+  .hero-desc {
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 540px;
+    margin-bottom: 2.5rem;
+    line-height: 1.75;
+    font-weight: 300;
+  }
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--white);
+    box-shadow: 0 4px 24px rgba(79,142,247,0.35);
+  }
+  .btn-primary:hover { background: #6BA3F9; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(79,142,247,0.5); }
+  .btn-ghost {
+    background: var(--glass);
+    color: var(--text);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+  }
+  .btn-ghost:hover { background: var(--glass-hover); transform: translateY(-2px); }
+
+  /* ── STATS ROW ── */
+  .stats {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 3.5rem;
+    flex-wrap: wrap;
+  }
+  .stat-item { text-align: left; }
+  .stat-num {
+    font-family: 'Sora', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1;
+  }
+  .stat-num span { color: var(--accent); }
+  .stat-label { font-size: 0.78rem; color: var(--muted); margin-top: 0.25rem; font-weight: 400; }
+  .stat-divider { width: 1px; background: var(--glass-border); align-self: stretch; }
+
+  /* ── SECTIONS ── */
+  section { padding: 6rem 0; }
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  h2 {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin-bottom: 3rem;
+  }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.25rem;
+  }
+  .skill-card { padding: 1.5rem; }
+  .skill-card-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  .skill-card h3 {
+    font-family: 'Sora', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 0.75rem;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tag {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 6px;
+    padding: 0.25rem 0.65rem;
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  /* ── EXPERIENCE ── */
+  .exp-list { display: flex; flex-direction: column; gap: 1.25rem; }
+  .exp-card { padding: 1.75rem 2rem; }
+  .exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .exp-title {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--white);
+  }
+  .exp-company { color: var(--accent); font-size: 0.875rem; font-weight: 500; margin-bottom: 0.25rem; }
+  .exp-date {
+    font-size: 0.78rem;
+    color: var(--muted);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 100px;
+    padding: 0.25rem 0.75rem;
+    white-space: nowrap;
+  }
+  .exp-bullets { margin-top: 1rem; padding-left: 0; list-style: none; }
+  .exp-bullets li {
+    font-size: 0.875rem;
+    color: var(--muted);
+    padding: 0.3rem 0 0.3rem 1.25rem;
+    position: relative;
+    line-height: 1.6;
+  }
+  .exp-bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.7rem;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.6;
+  }
+
+  /* ── PROJECTS ── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.25rem;
+  }
+  .project-card { padding: 1.75rem; }
+  .project-card h3 {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 0.35rem;
+  }
+  .project-tagline {
+    font-size: 0.8rem;
+    color: var(--accent2);
+    font-weight: 500;
+    margin-bottom: 0.85rem;
+  }
+  .project-desc {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 1.25rem;
+  }
+  .project-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+  /* ── EDUCATION & CERTS ── */
+  .edu-card { padding: 2rem; margin-bottom: 1.25rem; }
+  .edu-title {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 0.25rem;
+  }
+  .edu-school { color: var(--accent); font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; }
+  .edu-detail { font-size: 0.825rem; color: var(--muted); }
+  .certs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .cert-card {
+    padding: 1.25rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+  }
+  .cert-icon {
+    font-size: 1.4rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+  .cert-name { font-size: 0.825rem; font-weight: 600; color: var(--white); margin-bottom: 0.2rem; }
+  .cert-issuer { font-size: 0.75rem; color: var(--muted); }
+
+  /* ── CONTACT ── */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+  @media (max-width: 640px) { .contact-grid { grid-template-columns: 1fr; } }
+  .contact-card {
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+  }
+  .contact-card:hover { text-decoration: none; }
+  .contact-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    background: rgba(79,142,247,0.12);
+    border: 1px solid rgba(79,142,247,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .contact-label { font-size: 0.75rem; color: var(--muted); font-weight: 500; margin-bottom: 0.2rem; }
+  .contact-value { font-size: 0.9rem; color: var(--white); font-weight: 500; }
+
+  /* ── ACHIEVEMENTS ── */
+  .achieve-list { display: flex; flex-direction: column; gap: 0.85rem; }
+  .achieve-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.1rem 1.5rem;
+  }
+  .achieve-icon { font-size: 1.5rem; flex-shrink: 0; }
+  .achieve-text { font-size: 0.9rem; color: var(--text); font-weight: 500; }
+  .achieve-sub { font-size: 0.78rem; color: var(--muted); margin-top: 0.15rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--glass-border);
+    padding: 2rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  /* ── PAGE LOAD ANIMATION ── */
+  .hero-content { animation: fadeUp 0.8s ease both; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .stats { gap: 1rem; }
+    .stat-divider { display: none; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .exp-header { flex-direction: column; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, .orb, .hero-content { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-canvas">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">Mansoor<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="wrapper">
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <div class="hero-tag">Available for opportunities</div>
+      <h1>Mansoor Ali</h1>
+      <p class="hero-subtitle">Backend Engineer &amp; <strong>AI Systems Builder</strong></p>
+      <p class="hero-desc">
+        I build production-grade systems that actually ship — RAG pipelines, scalable APIs, AI agents, and enterprise integrations. Two years of real work, not side projects.
+      </p>
+      <div class="hero-cta">
+        <a href="mailto:alimansoor419@gmail.com" class="btn btn-primary">Get in touch</a>
+        <a href="https://mansoor-ali.online" class="btn btn-ghost" target="_blank">Portfolio site</a>
+      </div>
+      <div class="stats">
+        <div class="stat-item">
+          <div class="stat-num">2<span>+</span></div>
+          <div class="stat-label">Years in production</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-num">5<span>+</span></div>
+          <div class="stat-label">Live AI products shipped</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-num">500<span>+</span></div>
+          <div class="stat-label">Sites scraped & processed</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-num">1<span>st</span></div>
+          <div class="stat-label">University AI Competition</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-label">What I work with</div>
+    <h2>Technical Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-card glass">
+        <div class="skill-card-icon" style="background:rgba(79,142,247,0.12);">🧠</div>
+        <h3>AI & Machine Learning</h3>
+        <div class="skill-tags">
+          <span class="tag">OpenAI APIs</span><span class="tag">LangChain</span><span class="tag">RAG Pipelines</span><span class="tag">AI Agents</span><span class="tag">GraphRAG</span><span class="tag">Embeddings</span><span class="tag">scikit-learn</span><span class="tag">Pandas</span><span class="tag">NumPy</span>
+        </div>
+      </div>
+      <div class="skill-card glass">
+        <div class="skill-card-icon" style="background:rgba(167,139,250,0.12);">⚙️</div>
+        <h3>Backend Development</h3>
+        <div class="skill-tags">
+          <span class="tag">Node.js</span><span class="tag">NestJS</span><span class="tag">Express.js</span><span class="tag">FastAPI</span><span class="tag">REST APIs</span><span class="tag">GraphQL</span><span class="tag">Webhooks</span><span class="tag">JWT</span><span class="tag">OAuth 2.0</span>
+        </div>
+      </div>
+      <div class="skill-card glass">
+        <div class="skill-card-icon" style="background:rgba(34,211,238,0.12);">🗄️</div>
+        <h3>Databases</h3>
+        <div class="skill-tags">
+          <span class="tag">PostgreSQL</span><span class="tag">MongoDB</span><span class="tag">MySQL</span><span class="tag">Supabase</span><span class="tag">Vector DBs</span><span class="tag">Redis</span>
+        </div>
+      </div>
+      <div class="skill-card glass">
+        <div class="skill-card-icon" style="background:rgba(79,142,247,0.12);">🌐</div>
+        <h3>Frontend</h3>
+        <div class="skill-tags">
+          <span class="tag">React.js</span><span class="tag">Next.js</span><span class="tag">TypeScript</span><span class="tag">JavaScript</span><span class="tag">Socket.IO</span><span class="tag">HTML/CSS</span>
+        </div>
+      </div>
+      <div class="skill-card glass">
+        <div class="skill-card-icon" style="background:rgba(167,139,250,0.12);">🔗</div>
+        <h3>Integrations & Automation</h3>
+        <div class="skill-tags">
+          <span class="tag">Versori</span><span class="tag">Zapier</span><span class="tag">Make.com</span><span class="tag">n8n</span><span class="tag">Albato</span><span class="tag">Salesforce</span><span class="tag">Shopify</span><span class="tag">QuickBooks</span>
+        </div>
+      </div>
+      <div class="skill-card glass">
+        <div class="skill-card-icon" style="background:rgba(34,211,238,0.12);">🛠️</div>
+        <h3>DevOps & Tools</h3>
+        <div class="skill-tags">
+          <span class="tag">Git</span><span class="tag">Docker</span><span class="tag">CI/CD</span><span class="tag">Linux</span><span class="tag">Playwright</span><span class="tag">Postman</span><span class="tag">Swagger</span><span class="tag">AWS</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-label">Where I've worked</div>
+    <h2>Experience</h2>
+    <div class="exp-list">
+      <div class="exp-card glass">
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">Backend & AI Engineer</div>
+            <div class="exp-company">Phebsoft — Islamabad</div>
+          </div>
+          <span class="exp-date">Sep 2024 — Present</span>
+        </div>
+        <ul class="exp-bullets">
+          <li>Architected production AI SaaS platforms using Node.js, NestJS, and React.js with RAG pipelines and LLM integration.</li>
+          <li>Built OpenAI API and LangChain-based AI agents for semantic search, document retrieval, and intelligent recommendations.</li>
+          <li>Developed Playwright-based data ingestion pipelines processing structured data from 500+ international websites.</li>
+          <li>Integrated Salesforce, Shopify, QuickBooks, and payment gateways via REST APIs, webhooks, and OAuth 2.0.</li>
+          <li>Implemented JWT authentication, RBAC, logging, monitoring, and retry logic for production-grade reliability.</li>
+        </ul>
+      </div>
+      <div class="exp-card glass">
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">Solution Engineer — Integrations & Automation</div>
+            <div class="exp-company">Phebsoft — Islamabad</div>
+          </div>
+          <span class="exp-date">Mar 2024 — Sep 2024</span>
+        </div>
+        <ul class="exp-bullets">
+          <li>Built enterprise integrations on Versori platform using RESTful, GraphQL, and SOAP APIs for global clients.</li>
+          <li>Designed multi-step automation workflows on Zapier, Make.com, and Albato syncing CRMs and e-commerce platforms.</li>
+          <li>Developed TypeScript data transformation pipelines handling JSON/XML payloads with robust error handling and retry logic.</li>
+        </ul>
+      </div>
+      <div class="exp-card glass">
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">Developer Intern</div>
+            <div class="exp-company">Technosphere</div>
+          </div>
+          <span class="exp-date">Jun 2023 — Aug 2023</span>
+        </div>
+        <ul class="exp-bullets">
+          <li>Built backend features and REST API integrations for hospital management and e-commerce systems.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-label">Things I've built</div>
+    <h2>Projects</h2>
+    <div class="projects-grid">
+      <div class="project-card glass">
+        <h3>ApplyMate AI</h3>
+        <div class="project-tagline">AI university matching platform</div>
+        <p class="project-desc">Scraped 500+ international university websites across UK, Australia, Malaysia, Germany, and Netherlands. Built RAG system with vector indexing and embedding-based recommendations.</p>
+        <div class="project-stack">
+          <span class="tag">Node.js</span><span class="tag">React.js</span><span class="tag">RAG</span><span class="tag">PostgreSQL</span><span class="tag">Playwright</span>
+        </div>
+      </div>
+      <div class="project-card glass">
+        <h3>Complimate AI</h3>
+        <div class="project-tagline">Compliance document generation</div>
+        <p class="project-desc">LLM-powered compliance document generation system with NestJS backend, JWT auth, role-based access control, and automated policy creation workflows.</p>
+        <div class="project-stack">
+          <span class="tag">NestJS</span><span class="tag">OpenAI</span><span class="tag">LangChain</span><span class="tag">MongoDB</span><span class="tag">JWT</span>
+        </div>
+      </div>
+      <div class="project-card glass">
+        <h3>CaniDoit</h3>
+        <div class="project-tagline">Policy intelligence system</div>
+        <p class="project-desc">Semantic search and QA pipeline over large policy document corpora using OpenAI embeddings, vector retrieval, and optimised PostgreSQL queries.</p>
+        <div class="project-stack">
+          <span class="tag">Python</span><span class="tag">OpenAI Embeddings</span><span class="tag">Vector DB</span><span class="tag">PostgreSQL</span>
+        </div>
+      </div>
+      <div class="project-card glass">
+        <h3>MatchWise AI</h3>
+        <div class="project-tagline">CV optimisation platform</div>
+        <p class="project-desc">AI-based CV scoring and job classification system with NLP-driven similarity matching and a recruiter-facing React.js dashboard for candidate recommendations.</p>
+        <div class="project-stack">
+          <span class="tag">Node.js</span><span class="tag">React.js</span><span class="tag">NLP</span><span class="tag">REST APIs</span>
+        </div>
+      </div>
+      <div class="project-card glass">
+        <h3>ChatEye</h3>
+        <div class="project-tagline">Real-time communication system</div>
+        <p class="project-desc">Event-driven real-time messaging backend with Socket.IO, room management, async architecture, and a React.js frontend.</p>
+        <div class="project-stack">
+          <span class="tag">Node.js</span><span class="tag">Socket.IO</span><span class="tag">React.js</span><span class="tag">MongoDB</span>
+        </div>
+      </div>
+      <div class="project-card glass">
+        <h3>IntelliSource</h3>
+        <div class="project-tagline">Smart blog recommendation — FYP</div>
+        <p class="project-desc">Content-based blog recommendation system using collaborative filtering and cosine similarity scoring built with Python, scikit-learn, NumPy, and Pandas.</p>
+        <div class="project-stack">
+          <span class="tag">Python</span><span class="tag">scikit-learn</span><span class="tag">Pandas</span><span class="tag">NumPy</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="section-label">Academic background</div>
+    <h2>Education & Certifications</h2>
+    <div class="edu-card glass">
+      <div class="edu-title">Bachelor of Science in Computer Science</div>
+      <div class="edu-school">University of the Punjab, Gujranwala Campus</div>
+      <div class="edu-detail">2020 — 2024 &nbsp;&nbsp;·&nbsp;&nbsp; 137 Credit Hours &nbsp;&nbsp;·&nbsp;&nbsp; Programme taught entirely in English</div>
+      <div style="margin-top:0.75rem;">
+        <div class="skill-tags">
+          <span class="tag">Artificial Intelligence</span><span class="tag">Data Science</span><span class="tag">Software Engineering</span><span class="tag">Computer Networks</span><span class="tag">OS</span><span class="tag">DB Systems</span><span class="tag">Distributed Computing</span><span class="tag">Information Security</span>
+        </div>
+      </div>
+    </div>
+    <div class="certs-grid">
+      <div class="cert-card glass">
+        <div class="cert-icon">🏅</div>
+        <div><div class="cert-name">Backend Development</div><div class="cert-issuer">IBM — Node.js & Express</div></div>
+      </div>
+      <div class="cert-card glass">
+        <div class="cert-icon">🔒</div>
+        <div><div class="cert-name">Network Security</div><div class="cert-issuer">Google</div></div>
+      </div>
+      <div class="cert-card glass">
+        <div class="cert-icon">🛡️</div>
+        <div><div class="cert-name">Cybersecurity</div><div class="cert-issuer">Cisco</div></div>
+      </div>
+      <div class="cert-card glass">
+        <div class="cert-icon">🍃</div>
+        <div><div class="cert-name">MongoDB Basics</div><div class="cert-issuer">MongoDB University</div></div>
+      </div>
+      <div class="cert-card glass">
+        <div class="cert-icon">🎓</div>
+        <div><div class="cert-name">CS50 SQL</div><div class="cert-issuer">Harvard University</div></div>
+      </div>
+      <div class="cert-card glass">
+        <div class="cert-icon">☁️</div>
+        <div><div class="cert-name">Solutions Architect</div><div class="cert-issuer">AWS — In Progress</div></div>
+      </div>
+    </div>
+
+    <!-- ACHIEVEMENTS -->
+    <div style="margin-top:2rem;">
+      <div class="achieve-list">
+        <div class="achieve-item glass">
+          <div class="achieve-icon">🥇</div>
+          <div>
+            <div class="achieve-text">1st Place — University AI Competition</div>
+            <div class="achieve-sub">University of the Punjab, 2023</div>
+          </div>
+        </div>
+        <div class="achieve-item glass">
+          <div class="achieve-icon">🥉</div>
+          <div>
+            <div class="achieve-text">3rd Place — Final Year Project Competition</div>
+            <div class="achieve-sub">University of the Punjab, 2024</div>
+          </div>
+        </div>
+        <div class="achieve-item glass">
+          <div class="achieve-icon">🌍</div>
+          <div>
+            <div class="achieve-text">IELTS Academic — Band 6.5</div>
+            <div class="achieve-sub">British Council, 2025</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-label">Let's talk</div>
+    <h2>Get in Touch</h2>
+    <div class="contact-grid">
+      <a href="mailto:alimansoor419@gmail.com" class="contact-card glass">
+        <div class="contact-icon">✉️</div>
+        <div>
+          <div class="contact-label">Email</div>
+          <div class="contact-value">alimansoor419@gmail.com</div>
+        </div>
+      </a>
+      <a href="tel:+923184334464" class="contact-card glass">
+        <div class="contact-icon">📞</div>
+        <div>
+          <div class="contact-label">Phone</div>
+          <div class="contact-value">+92 318 433 4464</div>
+        </div>
+      </a>
+      <a href="https://mansoor-ali.online" target="_blank" class="contact-card glass">
+        <div class="contact-icon">🌐</div>
+        <div>
+          <div class="contact-label">Website</div>
+          <div class="contact-value">mansoor-ali.online</div>
+        </div>
+      </a>
+      <a href="https://linkedin.com/in/mansoor-ali-890206142" target="_blank" class="contact-card glass">
+        <div class="contact-icon">💼</div>
+        <div>
+          <div class="contact-label">LinkedIn</div>
+          <div class="contact-value">mansoor-ali-890206142</div>
+        </div>
+      </a>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <p>Built with care · Mansoor Ali · 2026</p>
+</footer>
+
+</body>
+</html>
